@@ -1,0 +1,10 @@
+[project]
+name = "manim-ani"
+version = "0.1.0"
+description = "Manim Animations"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "manim>=0.19.0",
+    "sympy>=1.14.0",
+]
