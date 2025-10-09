@@ -1,20 +1,24 @@
 from manim.utils.color import *
 
-problem = r"\sqrt{x+\sqrt{2x-1}}+\sqrt{x-\sqrt{2x-1}}=2" + r"\\" + r"x =\ ?" + r"\ ;" + r"x > 0"
+qcolor = YELLOW
+
+question = r"(2^n + 1) \text{ is never divisible by } 7 \ \text{!}"
 
 steps = [
-    (r"\sqrt{x+\sqrt{2x-1}}+\sqrt{x-\sqrt{2x-1}}=2", YELLOW),
-    (r"\text{Squaring both sides:}", BLUE),
-    (r"\because\ (a + b)^2 = a^2 + b^2 + 2ab", BLUE),
-    (r"(x + \sqrt{2x - 1}) + (x - \sqrt{2x - 1}) + 2\sqrt{(x + \sqrt{2x - 1})(x - \sqrt{2x - 1})} = 4", WHITE),
-    (r"2x + 2\sqrt{(x + \sqrt{2x - 1})(x - \sqrt{2x - 1})} = 4", WHITE),
-    (r"2x + 2\sqrt{x^2 - (2x - 1)} = 4", WHITE),
-    (r"2x + 2\sqrt{x^2 - 2x + 1} = 4", WHITE),
-    (r"2x + 2\sqrt{(x - 1)^2} = 4", WHITE),
-    (r"2x + 2|x - 1| = 4", WHITE),
-    (r"\because\ x > 0,\ |x - 1| = x - 1", BLUE),
-    (r"2x + 2(x - 1) = 4", WHITE),
-    (r"2x + 2x - 2 = 4", WHITE),
-    (r"4x = 6", WHITE),
-    (r"x = \dfrac{3}{2}", GREEN),
+    (r"\text{Let's assume: } 2^n + 1 \text{ to be a multiple of 7}", WHITE),
+    (r"\text{Then } 2^n \text{ must leave a remainder of 6 when divided by 7}", WHITE),
+    (r"\text{Trying different powers of 2}", YELLOW),
+    (r"2^1 = 2, \quad 2 \div 7 \text{ leaves remainder } 2", WHITE),
+    (r"2^2 = 4, \quad 4 \div 7 \text{ leaves remainder } 4", WHITE),
+    (r"2^3 = 8, \quad 8 \div 7 \text{ leaves remainder } 1", WHITE),
+    (r"2^4 = 16,\quad 16 \div 7 \text{ leaves remainder } 2", WHITE),
+    (r"2^5 = 32,\quad 32 \div 7 \text{ leaves remainder } 4", WHITE),
+    (r"2^6 = 64,\quad 64 \div 7 \text{ leaves remainder } 1", WHITE),
+    (r"\text{We see a pattern in the remainders: } 2,\ 4,\ 1,\ 2,\ 4,\ 1,\ \dots", YELLOW),
+    (r"\text{It keeps repeating and never gives remainder 6}", WHITE),
+    (r"\text{Our assumption is contradicted}", WHITE),
+    (r"\text{So } 2^n + 1 \text{ can never be a multiple of 7}", GREEN),
 ]
+
+
+problem = (question, qcolor)

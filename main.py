@@ -3,7 +3,7 @@ from steps import steps, problem
 
 class Solve(Scene):
     def construct(self):
-        title = MathTex(problem, font_size=60, color=BLUE)
+        title = MathTex(problem[0], font_size=60, color=problem[1])
 
         self.play(FadeIn(title))
         self.wait(2)
