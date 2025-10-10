@@ -1,65 +1,52 @@
 from manim import *
+import manim.utils.color.manim_colors as Colors
+from manim import Color, Scene, Square, Text, VGroup, DOWN, RIGHT, WHITE
 
-class Solve(Scene):
+class ShowAllShades(Scene):
     def construct(self):
-        # Draw square ABCD
-        square = Square(side_length=3)
-        square.shift(UP)  # Shift square up for visibility
-        self.play(Create(square))
-        self.wait(0.5)
-
-        # Get corners A, B, C, D of the square
-        A = square.get_corner(DOWN + LEFT)
-        B = square.get_corner(DOWN + RIGHT)
-        C = square.get_corner(UP + RIGHT)
-        D = square.get_corner(UP + LEFT)
-
-        # Draw and label corners
-        dots = [
-            Dot(A), Dot(B), Dot(C), Dot(D)
+        # Get all uppercase color attributes which are Color instances
+        color_shades = [
+            (name, getattr(Colors, name))
+            for name in dir(Colors)
+            if name.isupper() and isinstance(getattr(Colors, name), Color)
         ]
-        labels = [
-            MathTex("A").next_to(A, DOWN + LEFT, buff=0.2),
-            MathTex("B").next_to(B, DOWN + RIGHT, buff=0.2),
-            MathTex("C").next_to(C, UP + RIGHT, buff=0.2),
-            MathTex("D").next_to(D, UP + LEFT, buff=0.2),
-        ]
+        color_shades.sort(key=lambda x: x[0])  # Sort by name
 
-        for dot, label in zip(dots, labels):
-            self.play(FadeIn(dot), Write(label))
+        colors_per_column = 15
+        column_spacing = 5
+        row_spacing = 0.8
+        square_size = 0.5
 
-        self.wait(0.5)
+        columns = []
+        for col_idx in range((len(color_shades) + colors_per_column - 1) // colors_per_column):
+            group = VGroup()
+            for row_idx in range(colors_per_column):
+                idx = col_idx * colors_per_column + row_idx
+                if idx >= len(color_shades):
+                    break
+                name, color = color_shades[idx]
+                square = Square(side_length=square_size, stroke_color=WHITE, fill_color=color, fill_opacity=1)
+                label = Text(name, font_size=20).next_to(square, RIGHT, buff=0.2)
+                item = VGroup(square, label).arrange(RIGHT)
+                item.shift(DOWN * row_idx * row_spacing)
+                group.add(item)
+            group.arrange(DOWN, aligned_edge=LEFT)
+            group.shift(RIGHT * col_idx * column_spacing)
+            columns.append(group)
 
-        # Define points P, Q on AB and R on CD
-        p_ratio = 0.3
-        q_ratio = 0.7
-        r_ratio = 0.5
+        final = VGroup(*columns)
+        final.to_edge(UP, buff=1)
+        self.play(FadeIn(final))
+        self.wait(4)
 
-        P = interpolate(A, B, p_ratio)
-        Q = interpolate(A, B, q_ratio)
-        R = interpolate(C, D, r_ratio)
+if __name__ == "__main__":
+    # Configure render settings
+    config.output_file = "solve"  # output file name (without extension)
+    qlty = ["low_quality", "medium_quality", "high_quality", "fourk_quality"]
+    qlt_index = 2
+    config.quality = qlty[qlt_index]   
+    config.preview = True               # Automatically open video when done
 
-        # Draw points P, Q, R
-        point_P = Dot(P, color=YELLOW)
-        point_Q = Dot(Q, color=YELLOW)
-        point_R = Dot(R, color=YELLOW)
-
-        label_P = MathTex("P").next_to(P, DOWN, buff=0.2)
-        label_Q = MathTex("Q").next_to(Q, DOWN, buff=0.2)
-        label_R = MathTex("R").next_to(R, UP, buff=0.2)
-
-        self.play(FadeIn(point_P), Write(label_P))
-        self.play(FadeIn(point_Q), Write(label_Q))
-        self.play(FadeIn(point_R), Write(label_R))
-        self.wait(0.5)
-
-        # Draw triangle PQR
-        triangle = Polygon(P, Q, R, color=BLUE, stroke_width=3)
-        self.play(Create(triangle))
-        self.wait(2)
-
-        # Optionally show a title
-        title = MathTex(r"\text{Square } ABCD \text{ with } P, Q \in AB, R \in CD", font_size=42)
-        title.to_edge(UP)
-        self.play(Write(title))
-        self.wait(3)
+    # Instantiate and render the scene
+    scene = ShowAllShades()
+    scene.render()

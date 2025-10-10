@@ -37,8 +37,10 @@ class Solve(Scene):
                 step.next_to(group[-1], DOWN, buff=0.6)
 
             group.add(step)
-            self.play(Write(step), run_time=0.08*len(latex_str))
-            self.wait(1)
+            rrun = 0.08 *len(latex_str)
+            prun = min(2, rrun)
+            self.play(Write(step), run_time=prun)
+            self.wait(1.2)
         
         # Box ONLY the last step
         box = SurroundingRectangle(group[-1], color=GREEN, buff=0.3)
