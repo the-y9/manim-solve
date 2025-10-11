@@ -3,6 +3,8 @@ from steps import steps, problem
 
 class Solve(Scene):
     def construct(self):
+        self.add_sound("songs/fall.mp3", time_offset=0)
+
         title = MathTex(problem[0], font_size=60, color=problem[1])
 
         self.play(FadeIn(title))
@@ -43,12 +45,14 @@ class Solve(Scene):
             self.wait(1.2)
         
         # Box ONLY the last step
-        box = SurroundingRectangle(group[-1], color=GREEN, buff=0.3)
+        box = SurroundingRectangle(group[-1], color=color, buff=0.3)
         self.play(Create(box))
         self.wait(3)
+        self.renderer.stop_recording()
 
 if __name__ == "__main__":
     # Configure render settings
+    config.background_color = WHITE
     config.output_file = "solve"  # output file name (without extension)
     qlty = ["low_quality", "medium_quality", "high_quality", "fourk_quality"]
     qlt_index = 2

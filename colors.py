@@ -3,6 +3,8 @@ import manim.utils.color.manim_colors as Colors
 
 class ColorsOverview(Scene):
     def construct(self):
+        self.camera.background_color = WHITE
+
         # Define a helper to create groups of colored lines
         def color_group(color):
             subnames = [color + "_" + c for c in "abcde"]
@@ -28,6 +30,7 @@ class ColorsOverview(Scene):
 
 
 if __name__ == "__main__":
+    config.background_color = WHITE
     config.output_file = "colors"  # output file name (without extension)
     qlty = ["low_quality", "medium_quality", "high_quality", "fourk_quality"]
     qlt_index = 2
