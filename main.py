@@ -1,11 +1,12 @@
 from manim import *
-from steps import steps, problem
+from datetime import datetime
+from steps import steps, problem, BGCOL, TITLE_FONT_SIZE, STEP_FONT_SIZE
 
 class Solve(Scene):
     def construct(self):
-        self.add_sound("songs/fall.mp3", time_offset=0)
+        # self.add_sound("songs/fall.mp3", time_offset=0)
 
-        title = MathTex(problem[0], font_size=60, color=problem[1])
+        title = MathTex(problem[0], font_size=TITLE_FONT_SIZE, color=problem[1])
 
         self.play(FadeIn(title))
         self.wait(2)
@@ -17,7 +18,7 @@ class Solve(Scene):
         max_height = config.frame_height * 0.60
 
         for i, (latex_str, color) in enumerate(steps):
-            step = MathTex(latex_str, font_size=48, color=color)
+            step = MathTex(latex_str, font_size=STEP_FONT_SIZE, color=color)
             if step.width > 12:
                 step.scale_to_fit_width(12)
 
@@ -42,23 +43,54 @@ class Solve(Scene):
             rrun = 0.08 *len(latex_str)
             prun = min(2, rrun)
             self.play(Write(step), run_time=prun)
-            self.wait(1.2)
+            self.wait(1.5)
         
         # Box ONLY the last step
         box = SurroundingRectangle(group[-1], color=color, buff=0.3)
         self.play(Create(box))
         self.wait(3)
-        self.renderer.stop_recording()
+
+
+
+
+def apply_config(qlt_index: int = 2, preset: str = "v"):
+    qlty = ["low_quality", "medium_quality", "high_quality", "fourk_quality"]
+    
+    BASE_CONFIG = {
+        "background_color": BGCOL,
+        "quality": qlty[qlt_index],
+        "preview": True,
+    }
+
+    now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    RENDER_PRESETS = {
+        "v": {
+            **BASE_CONFIG,
+            "frame_width": 16,
+            "frame_height": 9,
+            "pixel_width": 1920,
+            "pixel_height": 1080,
+            "output_file": f"vid_{now_str}",
+        },
+        "s": {
+            **BASE_CONFIG,
+            "frame_width": 9,
+            "frame_height": 16,
+            "pixel_width": 1080,
+            "pixel_height": 1920,
+            "output_file": f"short_{now_str}",
+        }
+    }
+    cfg = RENDER_PRESETS.get(preset)
+    if not cfg:
+        raise ValueError(f"Unknown preset '{preset}'")
+
+    for key, value in cfg.items():
+        setattr(config, key, value)
+
 
 if __name__ == "__main__":
-    # Configure render settings
-    config.background_color = WHITE
-    config.output_file = "solve"  # output file name (without extension)
-    qlty = ["low_quality", "medium_quality", "high_quality", "fourk_quality"]
-    qlt_index = 2
-    config.quality = qlty[qlt_index]   
-    config.preview = True               # Automatically open video when done
-
-    # Instantiate and render the scene
+    apply_config(2, "s")
     scene = Solve()
     scene.render()

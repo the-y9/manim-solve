@@ -1,45 +1,49 @@
-from manim import *
-from manim.utils.color import COLOR_MAP
+$$
+\begin{array}{c}
+\text{QUESTION:}\\\\
+\lim_{n \to \infty} \sum_{k=1}^{n} \dfrac{k^3 + 6k^2 + 11k + 5}{(k+3)!}
+\end{array}
+$$
 
-class Col(Scene):
-    def construct(self):
-        # Get all named colors from COLOR_MAP
-        colors = list(COLOR_MAP.items())
-        colors.sort()  # Sort alphabetically by name
+$$
+\lim_{n \to \infty} \sum_{k=1}^{n} \dfrac{k^3 + 6k^2 + 11k + 6 -1}{(k+3)!}
+$$
 
-        # Layout settings
-        colors_per_column = 15
-        column_spacing = 5
-        row_spacing = 0.8
-        square_size = 0.5
+$$
+\lim_{n \to \infty} \sum_{k=1}^{n} \dfrac{(k+1)(k+2)(k+3)-1}{(k+3)!}
+$$
+$$
+\lim_{n \to \infty} \sum_{k=1}^{n} \left( \dfrac{(k+1)(k+2)(k+3)}{(k+3)(k+2)(k+1)k!} -  \dfrac{1}{(k+3)!} \right)
+$$
 
-        all_groups = []
+$$
+\lim_{n \to \infty} \sum_{k=1}^{n} \left( \dfrac{1}{k!} -  \dfrac{1}{(k+3)!} \right)
+$$
 
-        for col_index in range((len(colors) - 1) // colors_per_column + 1):
-            group = VGroup()
-            for row_index in range(colors_per_column):
-                i = col_index * colors_per_column + row_index
-                if i >= len(colors):
-                    break
-                name, hex_color = colors[i]
-                color = Color(hex_color)
-
-                # Create a colored square
-                square = Square(side_length=square_size, color=WHITE, fill_color=color, fill_opacity=1)
-                
-                # Add color name
-                label = Text(name, font_size=24).next_to(square, RIGHT, buff=0.2)
-                
-                item = VGroup(square, label)
-                item.arrange(RIGHT)
-                item.shift(DOWN * row_index)
-                group.add(item)
-
-            group.arrange(DOWN, aligned_edge=LEFT)
-            group.shift(RIGHT * col_index * column_spacing)
-            all_groups.append(group)
-
-        final = VGroup(*all_groups)
-        final.to_edge(UP)
-        self.play(FadeIn(final))
-        self.wait(3)
+$$
+\text{Expanding the sum:} \sum_{k=1}^{n} 
+$$
+$$
+\lim_{n \to \infty} \left( 
+\left( \dfrac{1}{1!} + \dfrac{1}{2!} + \dfrac{1}{3!} + \dfrac{1}{4!} + \cdots +  \dfrac{1}{n!} \right) - \left( \dfrac{1}{(1+3)!} + \dfrac{1}{(2+3)!} + \cdots + \dfrac{1}{(n+3)!} \right) 
+\right)
+$$
+$$
+\lim_{n \to \infty} \left( 
+\left( \dfrac{1}{1!} + \dfrac{1}{2!} + \dfrac{1}{3!} + \dfrac{1}{4!} + \cdots +  \dfrac{1}{n!} \right) - \left( \dfrac{1}{4!} + \dfrac{1}{5!} + \cdots + \frac{1}{n!} + \cdots + \dfrac{1}{(n+3)!} \right) 
+\right)
+$$
+$$
+\lim_{n \to \infty} \left( 
+\left( \dfrac{1}{1!} + \dfrac{1}{2!} + \dfrac{1}{3!} \right) - \left( \frac{1}{(n+1)!} + \frac{1}{(n+2)!} + \dfrac{1}{(n+3)!} \right) 
+\right)
+$$
+$$
+\text{As } n \to \infty, \left( \frac{1}{(n+1)!} + \frac{1}{(n+2)!} + \dfrac{1}{(n+3)!} \right) \to 0, \text{ so, we have:} 
+$$
+$$
+\dfrac{1}{1!} + \dfrac{1}{2!} + \dfrac{1}{3!} = 1 + \dfrac{1}{2} + \dfrac{1}{6} = \dfrac{10}{6}
+$$
+$$
+= \dfrac{5}{3}
+$$

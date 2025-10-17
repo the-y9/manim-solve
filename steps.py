@@ -1,29 +1,39 @@
 from manim.utils.color import *
 
-qcolor = BLACK
+TITLE_FONT_SIZE = 60
+STEP_FONT_SIZE = 48
+
+BGCOL = BLACK
+qcolor = YELLOW
 
 question = r"""
 \begin{array}{c}
-\text{Product of solutions of:} \\
+u+v=8; u,v>0
 \\
-e^{5(\ln x)^2 + 3} = x^8 \text{, for } x > 0
+A = 5u^2 + 11v^2
+\\
+min(A) = ?
 \end{array}
 """
 steps = [
-    (r"e^{5(\ln x)^2 + 3} = x^8 \text{, for } x > 0", BLACK),
-    (r"\text{Take natural logarithm on both sides:}", BLUE_E),
-    (r"\ln\left(e^{5(\ln x)^2 + 3}\right) = \ln(x^8)", BLUE_E),
-    (r"(5(\ln x)^2 + 3)\ln(e) = 8 \ln x", BLUE_E),
-    (r"\ln(e) = 1, \text{Let } y = \ln x", BLACK),
-    (r"\Rightarrow 5y^2 + 3 = 8y", BLUE_E),
-    (r"\Rightarrow 5y^2 - 8y + 3 = 0", BLUE_E),
-    (r"\text{Using quadratic formula: } y = \frac{8 \pm \sqrt{(-8)^2 - 4 \cdot 5 \cdot 3}}{2 \cdot 5}", BLUE_E),
-    (r"= \frac{8 \pm \sqrt{64 - 60}}{10} = \frac{8 \pm \sqrt{4}}{10}", BLUE_E),
-    (r"= \frac{8 \pm 2}{10} \Rightarrow y = 1 \text{ or } y = \frac{3}{5}", BLUE_E),
-    (r"\text{Recall: } y = \ln x \Rightarrow x = e^y", BLACK),
-    (r"\Rightarrow x = e^1 = e \quad \text{or} \quad x = e^{3/5}", BLUE_E),
-    (r"\text{Product of all solutions: } e \cdot e^{3/5} = e^{1 + 3/5}", BLUE_E),
-    (r"= e^{8/5}", RED_E),
-]
+    (r"u+v = 8, A = 5u^2 + 11v^2", YELLOW),
+    (r"v = 8-u \Rightarrow A = 5u^2 + 11(8-u)^2", WHITE),
+    (r"\Rightarrow A = 5u^2 + 11(u^2-16u+64)", WHITE),
+    (r"\Rightarrow A = 5u^2 + 11u^2-176u+704", WHITE),
+    (r"\Rightarrow A = 16u^2 -176u +704", WHITE),
 
+    (r"\text{Differentiation Trick to find min: }", YELLOW),
+    (r"\frac{dA}{du} = 32u -176 = 0", WHITE),
+    (r"\Rightarrow u = \frac{176}{32} = 5.5", WHITE), 
+    (r"\Rightarrow v = 8 - u = 2.5", WHITE),
+
+    (r"\text{Double Check with 2nd Derivative: }", YELLOW),
+    (r"\frac{d^2A}{du^2} = 32 > 0 \Rightarrow \text{Min at } u=5.5", WHITE),
+
+    (r"\text{Calculate Minimum of}\ A", YELLOW),
+    (r"A_{min} = 5(5.5)^2 + 11(2.5)^2", WHITE),
+    (r"= 5(30.25) + 11(6.25) = 151.25 + 68.75", WHITE),
+    (r"= 220", GREEN),
+
+]
 problem = (question, qcolor)
