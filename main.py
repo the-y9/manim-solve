@@ -91,6 +91,6 @@ def apply_config(qlt_index: int = 2, preset: str = "v"):
 
 
 if __name__ == "__main__":
-    apply_config(2, "s")
+    apply_config(2, "v")
     scene = Solve()
     scene.render()
