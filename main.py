@@ -9,7 +9,7 @@ class Solve(Scene):
         title = MathTex(problem[0], font_size=TITLE_FONT_SIZE, color=problem[1])
 
         self.play(FadeIn(title))
-        self.wait(2)
+        self.wait(2.5)
         self.play(FadeOut(title), title.animate.to_edge(UP))
         self.wait(0.5)
 
@@ -23,7 +23,7 @@ class Solve(Scene):
                 step.scale_to_fit_width(12)
 
             # Check if group height exceeds 60% of screen
-            if group.get_height() > max_height:
+            if group.height > max_height:
                 # Shift the entire group up by height of one step + buffer
                 if i % 4 ==0:
                     dynamic_shift = 1
@@ -91,6 +91,6 @@ def apply_config(qlt_index: int = 2, preset: str = "v"):
 
 
 if __name__ == "__main__":
-    apply_config(2, "v")
+    apply_config(2, "s")
     scene = Solve()
     scene.render()

@@ -4,7 +4,7 @@ TITLE_FONT_SIZE = 60
 STEP_FONT_SIZE = 54
 
 MODE = "l"
-if MODE == "d":
+if MODE == "l":
     BGCOL = WHITE
     QCOLOR = BLACK
     COMMENT_COLOR = BLACK
@@ -19,25 +19,32 @@ else:
 
 question = r"""
 \begin{array}{c}
-\sqrt{2 - \sqrt{5}} + \sqrt{2 + \sqrt{5}} = \ ?
+x > -1 
+\\
+\\
+y = x + \dfrac{1}{x+1} + 2, 
+\\
+\\
+y_{\min} =  ?
 \end{array}
 """
 
 steps = [
-    (r"\text{Let } x = \sqrt{2 - \sqrt{5}} + \sqrt{2 + \sqrt{5}}", COMMENT_COLOR),
-    (r"\text{Square both sides: } x^2 = \left(\sqrt{2 - \sqrt{5}} + \sqrt{2 + \sqrt{5}}\right)^2", STEP_COLOR),
-    (r"x^2 = (2 - \sqrt{5}) + (2 + \sqrt{5}) + 2\sqrt{(2 - \sqrt{5})(2 + \sqrt{5})}", STEP_COLOR),
-    (r"x^2 = 4 + 2\sqrt{4 - 5}", STEP_COLOR),
-    (r"x^2 = 4 + 2\sqrt{-1}", STEP_COLOR),
-    (r"\text{Since } \sqrt{-1} = i,", COMMENT_COLOR),
-    (r"x^2 = 4 + 2i", STEP_COLOR),
-    (r"\text{Now write in polar form: } 4 + 2i = r e^{i\theta}", COMMENT_COLOR),
-    (r"r = \sqrt{a^2 + b^2}", COMMENT_COLOR), 
-    (r"= \sqrt{4^2 + 2^2} = 2\sqrt{5}", STEP_COLOR),
-    (r"\theta = \tan^{-1}\left(\frac{b}{a}\right)", COMMENT_COLOR),
-    (r"= \tan^{-1}\left(\frac{2}{4}\right)= \tan^{-1}\left(\frac{1}{2}\right)", STEP_COLOR),
-    (r"\text{So, }x = \sqrt{r} \, e^{i\theta}", COMMENT_COLOR),
-    (r"x = \sqrt{2\sqrt{5}} \, e^{i \tan^{-1}\left(\frac{2}{4}\right)}", ANS_COLOR),
+    (r"\text{Given } y = x + \dfrac{1}{x+1} + 2, \quad x > -1", COMMENT_COLOR),
+    (r"\text{To find the minimum value of } y,", COMMENT_COLOR),
+    (r"\text{ we differentiate } y \text{ with respect to } x.", COMMENT_COLOR),
+    (r"\dfrac{dy}{dx} = 1 - \dfrac{1}{(x+1)^2}", STEP_COLOR),
+    (r"\text{Set } \dfrac{dy}{dx} = 0 \Rightarrow 1 - \dfrac{1}{(x+1)^2} = 0", STEP_COLOR),
+    (r"(x+1)^2 = 1", STEP_COLOR),
+    (r"x + 1 = \pm 1", STEP_COLOR),
+    (r"\text{Since } x > -1,", COMMENT_COLOR),
+    (r"x+1 > 0 \Rightarrow x+1 = 1", STEP_COLOR),
+    (r"x = 0", STEP_COLOR),
+    (r"\text{Check second derivative: }", COMMENT_COLOR),
+    (r"\dfrac{d^2y}{dx^2} = \dfrac{2}{(x+1)^3}", STEP_COLOR),
+    (r"\dfrac{d^2y}{dx^2}_{x=0} = 2 > 0 \Rightarrow \text{Minimum}", COMMENT_COLOR),
+    (r"\therefore y_{\min} = 0 + \dfrac{1}{1} + 2", STEP_COLOR),
+    (r"y_{\min} = 3", ANS_COLOR),
 ]
 
 problem = (question, QCOLOR)
